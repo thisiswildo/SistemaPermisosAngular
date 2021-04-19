@@ -1,0 +1,83 @@
+<button class="btn btn-secondary" type="button" (click)="goBack()">
+    <i class="fa fa-arrow-left fa-lg"></i>
+    Volver
+</button>
+<br>
+<br>
+<div class="alert alert-danger" role="alert" *ngIf="notFound">
+    404 - La solicitud no fue encontrada
+</div>
+<form novalidate #form="ngForm" (ngSubmit)="onSubmit(form)" *ngIf="!notFound">
+    <input type="hidden" name="id" [value]="service.formData.id" />
+    <div class="form-group">
+        <label>Nombre Empleado</label>
+        <input
+            type="text"
+            class="form-control form-control-lg"
+            name="nombreEmpleado"
+            #nombreEmpleado="ngModel" [(ngModel)]="service.formData.nombreEmpleado"
+            [class.invalid]="nombreEmpleado.invalid && nombreEmpleado.touched"
+            required maxlength="50"
+        >
+    </div>
+    <div class="form-group">
+        <label>Apellidos Empleado</label>
+        <input
+            type="text"
+            class="form-control form-control-lg"
+            name="apellidosEmpleado"
+            #apellidosEmpleado="ngModel" [(ngModel)]="service.formData.apellidosEmpleado"
+            [class.invalid]="apellidosEmpleado.invalid && apellidosEmpleado.touched"
+            required maxlength="50"
+        >
+    </div>
+    <div class="row">
+        <div class="form-group col-md-6">
+            <label>Tipo Permiso</label>
+            <select
+                class="form-select form-select-lg"
+                aria-label="Default select example"
+                name="tipoPermisoId"
+                #tipoPermisoId="ngModel" [(ngModel)]="service.formData.tipoPermisoId"
+                [class.invalid]="tipoPermisoId.invalid && tipoPermisoId.touched"
+                required
+            >
+                <option selected value="0">--SELECCIONE--</option>
+                <option
+                    *ngFor="let tipoPermiso of tiposPermisos"
+                    [ngValue]="tipoPermiso.id"
+                >
+                    {{ tipoPermiso.descripcion }}
+                </option>
+            </select>
+        </div>
+        <div class="form-group col-md-6">
+            <label>Fecha Permiso</label>
+            <input
+                type="text"
+                class="form-control form-control-lg"
+                name="fechaPermiso"
+                placeholder="yyyy-MM-dd"
+                minlength="10"
+                maxlength="10"
+                #fechaPermiso="ngModel" [(ngModel)]="service.formData.fechaPermiso"
+                [class.invalid]="fechaPermiso.invalid && fechaPermiso.touched"
+                required
+            >
+        </div>
+    </div>
+    <br>
+    <div class="form-group col-md-6">
+        <button
+            class="btn btn-primary btn-lg"
+            type="submit"
+            [disabled]="form.invalid"
+        >
+            {{ id === 0 ? 'Guardar' : 'Actualizar' }}
+            <span
+                class="spinner-border spinner-border-sm" role="status" aria-hidden="true"
+                *ngIf="loading"
+            ></span>
+        </button>
+    </div>
+</form>
