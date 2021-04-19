@@ -1,0 +1,35 @@
+<button class="btn btn-primary" type="button" (click)="newPermiso()">
+    Solicitar Permiso
+    <i class="fa fa-plus fa-lg"></i>
+</button>
+<br>
+<br>
+<table class="table">
+    <thead>
+      <tr class="table-dark">
+        <th scope="col">Nombre Empleado</th>
+        <th scope="col">Apellidos Empleado</th>
+        <th scope="col">Tipo Permiso</th>
+        <th scope="col">Fecha Permiso</th>
+        <th scope="col">Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let permiso of permisos">
+            <td>{{ permiso.nombreEmpleado }}</td>
+            <td>{{ permiso.apellidosEmpleado }}</td>
+            <td>{{ permiso.tipoPermisoDescripcion }}</td>
+            <td>{{ permiso.fechaPermiso }}</td>
+            <td>
+                <i
+                    class="far fa-edit fa-lg"
+                    (click)="editPermiso(permiso.id)"
+                ></i>
+                <i
+                    class="far fa-trash-alt fa-lg text-danger"
+                    (click)="confirmDelete(permiso)"
+                ></i>
+            </td>
+        </tr>
+    </tbody>
+  </table>
